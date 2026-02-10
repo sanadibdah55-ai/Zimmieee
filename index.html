@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hey Zimmie 💚</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(135deg, #c8facc, #9be7a4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Poppins', sans-serif;
+  overflow: hidden;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  width: 400px;
+  text-align: center;
+  box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 10;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+p {
+  margin-bottom: 30px;
+  color: #444;
+}
+
+/* Buttons */
+.buttons {
+  position: relative;
+  height: 100px;
+}
+
+button {
+  padding: 12px 26px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.3s;
+  position: absolute;
+}
+
+#yesBtn {
+  background: #4caf50;
+  color: white;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#noBtn {
+  background: #ddd;
+  color: #333;
+  right: 20px;
+  top: 10px;
+}
+
+/* Final message */
+.final {
+  font-size: 1.3rem;
+  color: #4caf50;
+  line-height: 1.6;
+}
+
+/* Hearts */
+.heart {
+  position: absolute;
+  color: #ff5fa2;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(-10vh); }
+}
+
+/* Villagers */
+.villager {
+  position: absolute;
+  width: 30px;
+  height: 40px;
+  background: #6b4f2c;
+  animation: wander 10s linear infinite;
+}
+
+.villager::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 0;
+  width: 30px;
+  height: 15px;
+  background: #3a2a18;
+}
+
+.villager::after {
+  content: "";
+  position: absolute;
+  top: 12px;
+  left: 10px;
+  width: 10px;
+  height: 10px;
+  background: #000;
+}
+
+@keyframes wander {
+  0% { transform: translateX(-50px); }
+  50% { transform: translateX(110vw); }
+  100% { transform: translateX(-50px); }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1>Hey Zimmie 💚</h1>
+  <p>Will you be my best friend (maybe more later)?</p>
+
+  <div class="buttons">
+    <button id="yesBtn">Yes</button>
+    <button id="noBtn">No</button>
+  </div>
+</div>
+
+<script>
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const card = document.getElementById("card");
+
+let scale = 1;
+let clicks = 0;
+
+const noTexts = [
+  "are you sure?",
+  "princess u sure?",
+  "princessss 😅",
+  "just say yes princess",
+  "princess pleaseee 😭"
+];
+
+noBtn.addEventListener("click", () => {
+  scale += 0.25;
+  yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
+
+  const maxX = card.clientWidth - 80;
+  const maxY = card.clientHeight - 80;
+
+  noBtn.style.left = Math.random() * maxX + "px";
+  noBtn.style.top = Math.random() * maxY + "px";
+
+  if (clicks < noTexts.length) {
+    noBtn.textContent = noTexts[clicks];
+    clicks++;
+  }
+});
+
+yesBtn.addEventListener("click", () => {
+  card.innerHTML = `
+    <div class="final">
+      💚 Thank you so much for appearing in my life 💚
+    </div>
+  `;
+});
+
+/* Create hearts */
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = "💚";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 3 + 4) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 6000);
+}, 400);
+
+/* Create villagers */
+for (let i = 0; i < 5; i++) {
+  const v = document.createElement("div");
+  v.className = "villager";
+  v.style.top = Math.random() * 80 + "vh";
+  v.style.animationDuration = (Math.random() * 6 + 6) + "s";
+  document.body.appendChild(v);
+}
+</script>
+
+</body>
+</html>
